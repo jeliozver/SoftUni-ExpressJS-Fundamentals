@@ -1,0 +1,21 @@
+{
+  "name": "shop-stop-part-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engine": "10.1.0",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Jeliozver",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "latest",
+    "gulp": "3.9.1",
+    "gulp-clean-css": "3.9.4",
+    "gulp-rename": "1.2.3",
+    "multiparty": "^4.1.4",
+    "shortid": "^2.2.8"
+  }
+}
