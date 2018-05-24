@@ -1,0 +1,16 @@
+{
+  "name": "shop-stop-part-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engine": "10.1.0",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Jeliozver",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "latest"
+  }
+}
