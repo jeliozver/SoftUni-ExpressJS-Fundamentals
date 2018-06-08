@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB Playground</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/public/images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/public/css/css.css">
+</head>
+
+<body>
+    <a href="/">
+        <h1>Hello to your MongoDB playground</h1>
+    </a>
+    <div id='success/error'></div>
+
+    <form action="/generateTag" method="POST">
+        <fieldset>
+            <legend>Add new tag:</legend>
+            <label for="tagName">Tag name:</label>
+            <input type="text" name="tagName" id="tagName" placeholder="Your tag">
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+
+    <form action="/addImage" method="POST">
+        <fieldset>
+            <legend>Add new Image:</legend>
+            <label for="imageUrl">Image url:</label>
+            <input type="text" name="imageUrl" id="imageUrl" placeholder="Your URL">
+            <label for="imageTitle">Title:</label>
+            <input type="text" name="imageTitle" id="imageTitle" placeholder="Title">
+            <label for="description">Description:</label>
+            <input type="text" name="description" id="description" placeholder="Description">
+            <label for="tagField">Tags:</label>
+            <input type="text" id='tagField' name="tags" value="" readonly>
+            <div>
+                <div class="replaceMe"></div>
+            </div>
+            <input type="text" id='tagsId' style='display:none' name="tagsID">
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+    <form action="/search" method="GET">
+        <fieldset>
+            <legend>Search:</legend>
+            <label for="tagSearch">Tag name:</label>
+            <input type="text" name="tagName" id="tagSearch" placeholder="Write tags separted by ,">
+            <label for="afterDate">Posted after:</label>
+            <input type="date" name="afterDate" id="afterDate">
+            <label for="beforeDate">Posted before:</label>
+            <input type="date" name="beforeDate" id="beforeDate">
+            <label for="limit">Limit:</label>
+            <input type="number" step=1 name="limit" id="limit">
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</body>
+
+<script src="public/js/attachEvents.js"></script>
+
+</html>
