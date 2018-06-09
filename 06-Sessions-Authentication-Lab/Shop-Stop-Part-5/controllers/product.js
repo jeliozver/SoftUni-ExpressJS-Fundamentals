@@ -54,8 +54,11 @@ module.exports = {
         PRODUCT.create(productObj).then((insertedProduct) => {
             CATEGORY.findById(insertedProduct.category).then((category) => {
                 category.products.push(insertedProduct._id);
-                category.save();
-                res.redirect('/');
+                category.save().then(() => {
+                    req.user.createdProducts.push(insertedProduct._id);
+                    req.user.save();
+                    res.redirect('/');
+                });
             }).catch((err) => {
                 console.log(err);
                 res.sendStatus(400);
@@ -228,9 +231,21 @@ module.exports = {
                                 return;
                             }
 
-                            res.redirect(
-                                `/?success=${encodeURIComponent('Product was deleted successfully!')}`
-                            );
+                            let boughtProductsIndex = req.user.boughtProducts.indexOf(id);
+                            let createdProductsIndex = req.user.createdProducts.indexOf(id);
+                            if (boughtProductsIndex > -1) {
+                                req.user.boughtProducts.splice(boughtProductsIndex, 1);
+                            }
+
+                            if (createdProductsIndex > -1) {
+                                req.user.createdProducts.splice(createdProductsIndex, 1);
+                            }
+
+                            req.user.save().then(() => {
+                                res.redirect(
+                                    `/?success=${encodeURIComponent('Product was deleted successfully!')}`
+                                );
+                            });
                         });
                     });
                 }).catch((err) => {

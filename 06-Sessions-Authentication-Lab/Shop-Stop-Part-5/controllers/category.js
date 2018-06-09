@@ -9,8 +9,11 @@ module.exports = {
     addCategoryPost: (req, res) => {
         let category = req.body;
         category.creator = req.user._id;
-        CATEGORY.create(category).then(() => {
-            res.redirect('/');
+        CATEGORY.create(category).then((newCategory) => {
+            req.user.createdCategories.push(newCategory._id);
+            req.user.save().then(() => {
+                res.redirect('/');
+            });
         }).catch((err) => {
             console.log(err);
             res.sendStatus(404);

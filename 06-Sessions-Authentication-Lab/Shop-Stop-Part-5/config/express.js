@@ -14,6 +14,7 @@ module.exports = (APP, CONFIG) => {
     APP.use(COOKIE_PARSER());
     APP.use(SESSION({
         secret: '6b875ecdcb3d258f0e1155a3b75d9d79',
+        cookie: {maxAge: 604800000},
         saveUninitialized: false,
         resave: false
     }));
