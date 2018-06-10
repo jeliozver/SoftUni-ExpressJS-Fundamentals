@@ -16,19 +16,19 @@ module.exports = (APP) => {
     APP.get('/user/login', USER_CONTROLLER.loginGet);
     APP.post('/user/login', USER_CONTROLLER.loginPost);
 
-    APP.post('/user/logout', AUTH.isAuthenticated, USER_CONTROLLER.logout);
+    APP.post('/user/logout', AUTH.isAuth, USER_CONTROLLER.logout);
 
-    APP.get('/product/add', AUTH.isAuthenticated, PRODUCT_CONTROLLER.addProductGet);
-    APP.post('/product/add', AUTH.isAuthenticated, upload.single('image'), PRODUCT_CONTROLLER.addProductPost);
+    APP.get('/product/add', AUTH.isAuth, PRODUCT_CONTROLLER.addProductGet);
+    APP.post('/product/add', AUTH.isAuth, upload.single('image'), PRODUCT_CONTROLLER.addProductPost);
 
-    APP.get('/product/edit/:id', AUTH.isAuthenticated, PRODUCT_CONTROLLER.editProductGet);
-    APP.post('/product/edit/:id', AUTH.isAuthenticated, upload.single('image'), PRODUCT_CONTROLLER.editProductPost);
+    APP.get('/product/edit/:id', AUTH.isAuth, AUTH.isActionValid, PRODUCT_CONTROLLER.editProductGet);
+    APP.post('/product/edit/:id', AUTH.isAuth, upload.single('image'), AUTH.isActionValid, PRODUCT_CONTROLLER.editProductPost);
 
-    APP.get('/product/delete/:id', AUTH.isAuthenticated, PRODUCT_CONTROLLER.deleteProductGet);
-    APP.post('/product/delete/:id', AUTH.isAuthenticated, PRODUCT_CONTROLLER.deleteProductPost);
+    APP.get('/product/delete/:id', AUTH.isAuth, AUTH.isActionValid, PRODUCT_CONTROLLER.deleteProductGet);
+    APP.post('/product/delete/:id', AUTH.isAuth, AUTH.isActionValid, PRODUCT_CONTROLLER.deleteProductPost);
 
-    APP.get('/product/buy/:id', AUTH.isAuthenticated, PRODUCT_CONTROLLER.buyProductGet);
-    APP.post('/product/buy/:id', AUTH.isAuthenticated, PRODUCT_CONTROLLER.buyProductPost);
+    APP.get('/product/buy/:id', AUTH.isAuth, AUTH.isBought, PRODUCT_CONTROLLER.buyProductGet);
+    APP.post('/product/buy/:id', AUTH.isAuth, AUTH.isBought, PRODUCT_CONTROLLER.buyProductPost);
 
     APP.get('/category/add', AUTH.isInRole('Admin'), CATEGORY_CONTROLLER.addCategoryGet);
     APP.post('/category/add', AUTH.isInRole('Admin'), CATEGORY_CONTROLLER.addCategoryPost);

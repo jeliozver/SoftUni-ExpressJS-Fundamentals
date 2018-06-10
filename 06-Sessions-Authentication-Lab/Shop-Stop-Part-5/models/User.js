@@ -1,5 +1,5 @@
 const MONGOOSE = require('mongoose');
-const ROLE = require('../models/Role');
+const ROLE = MONGOOSE.model('Role');
 const ENCRYPTION = require('../utilities/encryption');
 const STRING = MONGOOSE.Schema.Types.String;
 const NUMBER = MONGOOSE.Schema.Types.Number;

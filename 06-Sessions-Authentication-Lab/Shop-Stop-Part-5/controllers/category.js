@@ -1,5 +1,4 @@
-const MONGOOSE = require('mongoose');
-const CATEGORY = MONGOOSE.model('Category');
+const CATEGORY = require('mongoose').model('Category');
 
 module.exports = {
     addCategoryGet: (req, res) => {

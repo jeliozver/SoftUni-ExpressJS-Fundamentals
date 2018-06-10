@@ -1,4 +1,4 @@
-const PRODUCT = require('../models/Product');
+const PRODUCT = require('mongoose').model('Product');
 
 module.exports = {
     index: (req, res) => {

@@ -1,5 +1,5 @@
-const ROLE = require('../models/Role');
-const USER = require('../models/User');
+const ROLE = require('mongoose').model('Role');
+const USER = require('mongoose').model('User');
 const ENCRYPTION = require('../utilities/encryption');
 
 module.exports = {

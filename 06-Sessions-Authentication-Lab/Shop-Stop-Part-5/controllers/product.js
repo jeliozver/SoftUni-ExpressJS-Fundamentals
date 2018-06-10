@@ -1,6 +1,6 @@
-const CATEGORY = require('../models/Category');
-const PRODUCT = require('../models/Product');
-const ROLE = require('../models/Role');
+const CATEGORY = require('mongoose').model('Category');
+const PRODUCT = require('mongoose').model('Product');
+const ROLE = require('mongoose').model('Role');
 const FS = require('fs');
 
 function editProduct(product, editedProduct) {
@@ -70,40 +70,11 @@ module.exports = {
     },
 
     editProductGet: (req, res) => {
-        let id = req.params.id;
-
-        PRODUCT.findById(id).then((product) => {
-            if (!product) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('Product was not found!')}`
-                );
-
-                return;
-            }
-
-            if (product.buyer) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('This product has a buyer!')}`
-                );
-
-                return;
-            }
-
-            if (product.creator.equals(req.user._id) || isAdmin(req.user)) {
-                CATEGORY.find({}).then((categories) => {
-                    res.render('product/edit', {
-                        product: product,
-                        categories: categories
-                    });
-                }).catch((err) => {
-                    console.log(err);
-                    res.sendStatus(400);
-                });
-            } else {
-                res.redirect(
-                    `/?error=${encodeURIComponent('You must be author or Admin to edit this product')}`
-                );
-            }
+        CATEGORY.find({}).then((categories) => {
+            res.render('product/edit', {
+                product: req.product,
+                categories: categories
+            });
         }).catch((err) => {
             console.log(err);
             res.sendStatus(400);
@@ -111,206 +82,103 @@ module.exports = {
     },
 
     editProductPost: (req, res) => {
-        let id = req.params.id;
         let editedProduct = req.body;
 
-        PRODUCT.findById(id).then((product) => {
-            if (!product) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('Product was not found!')}`
-                );
+        req.product.name = editedProduct.name;
+        req.product.description = editedProduct.description;
+        req.product.price = editedProduct.price;
 
-                return;
-            }
-
-            if (product.buyer) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('This product has a buyer!')}`
-                );
-
-                return;
-            }
-
-            if (product.creator.equals(req.user._id) || isAdmin(req.user)) {
-                product.name = editedProduct.name;
-                product.description = editedProduct.description;
-                product.price = editedProduct.price;
-
-                if (req.file) {
-                    let imageName = product.image.split('/').pop();
-                    FS.unlink(`./content/images/${imageName}`, (err) => {
-                        if (err) {
-                            console.log(err);
-                            res.sendStatus(500);
-                            return;
-                        }
-
-                        product.image = `/images/${req.file.filename}`;
-
-                        editProduct(product, editedProduct).then(() => {
-                            res.redirect(
-                                `/?success=${encodeURIComponent('Product was edited successfully!')}`
-                            );
-                        }).catch((err) => {
-                            console.log(err);
-                            res.redirect(
-                                `/?error=${encodeURIComponent('Product was not edited!')}`
-                            );
-                        });
-                    });
-                } else {
-                    editProduct(product, editedProduct).then(() => {
-                        res.redirect(
-                            `/?success=${encodeURIComponent('Product was edited successfully!')}`
-                        );
-                    }).catch((err) => {
-                        console.log(err);
-                        res.redirect(
-                            `/?error=${encodeURIComponent('Product was not edited!')}`
-                        );
-                    });
+        if (req.file) {
+            let imageName = req.product.image.split('/').pop();
+            FS.unlink(`./content/images/${imageName}`, (err) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                    return;
                 }
-            } else {
-                res.redirect(
-                    `/?error=${encodeURIComponent('You must be author or Admin to edit this product')}`
-                );
-            }
 
-        }).catch((err) => {
-            console.log(err);
-            res.sendStatus(400);
-        });
+                req.product.image = `/images/${req.file.filename}`;
+
+                editProduct(req.product, editedProduct).then(() => {
+                    res.redirect(
+                        `/?success=${encodeURIComponent('Product was edited successfully!')}`
+                    );
+                }).catch((err) => {
+                    console.log(err);
+                    res.redirect(
+                        `/?error=${encodeURIComponent('Product was not edited!')}`
+                    );
+                });
+            });
+        } else {
+            editProduct(req.product, editedProduct).then(() => {
+                res.redirect(
+                    `/?success=${encodeURIComponent('Product was edited successfully!')}`
+                );
+            }).catch((err) => {
+                console.log(err);
+                res.redirect(
+                    `/?error=${encodeURIComponent('Product was not edited!')}`
+                );
+            });
+        }
     },
 
     deleteProductGet: (req, res) => {
-        let id = req.params.id;
-
-        PRODUCT.findById(id).then((product) => {
-            if (!product) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('Product was not found!')}`
-                );
-                return;
-            }
-
-            if (product.buyer) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('This product has a buyer!')}`
-                );
-
-                return;
-            }
-
-            if (product.creator.equals(req.user._id) || isAdmin(req.user)) {
-                res.render('product/delete', {
-                    product: product
-                });
-            } else {
-                res.redirect(
-                    `/?error=${encodeURIComponent('You must be author or Admin to delete this product')}`
-                );
-            }
-        }).catch((err) => {
-            console.log(err);
-            res.sendStatus(400);
+        res.render('product/delete', {
+            product: req.product
         });
     },
 
     deleteProductPost: (req, res) => {
         let id = req.params.id;
 
-        PRODUCT.findById(id).then((product) => {
-            if (product.creator.equals(req.user._id) || isAdmin(req.user)) {
-                PRODUCT.findByIdAndRemove(id).then((removedProduct) => {
-                    CATEGORY.update({ _id: removedProduct.category }, { $pull: { products: removedProduct._id } }).then(() => {
-                        let imageName = removedProduct.image.split('/').pop();
-                        FS.unlink(`./content/images/${imageName}`, (err) => {
-                            if (err) {
-                                console.log(err);
-                                res.sendStatus(500);
-                                return;
-                            }
+        PRODUCT.findByIdAndRemove(id).then((removedProduct) => {
+            CATEGORY.update({ _id: removedProduct.category }, { $pull: { products: removedProduct._id } }).then(() => {
+                let imageName = removedProduct.image.split('/').pop();
+                FS.unlink(`./content/images/${imageName}`, (err) => {
+                    if (err) {
+                        console.log(err);
+                        res.sendStatus(500);
+                        return;
+                    }
 
-                            let boughtProductsIndex = req.user.boughtProducts.indexOf(id);
-                            let createdProductsIndex = req.user.createdProducts.indexOf(id);
-                            if (boughtProductsIndex > -1) {
-                                req.user.boughtProducts.splice(boughtProductsIndex, 1);
-                            }
+                    let boughtProductsIndex = req.user.boughtProducts.indexOf(id);
+                    let createdProductsIndex = req.user.createdProducts.indexOf(id);
 
-                            if (createdProductsIndex > -1) {
-                                req.user.createdProducts.splice(createdProductsIndex, 1);
-                            }
+                    if (boughtProductsIndex > -1) {
+                        req.user.boughtProducts.splice(boughtProductsIndex, 1);
+                    }
 
-                            req.user.save().then(() => {
-                                res.redirect(
-                                    `/?success=${encodeURIComponent('Product was deleted successfully!')}`
-                                );
-                            });
-                        });
+                    if (createdProductsIndex > -1) {
+                        req.user.createdProducts.splice(createdProductsIndex, 1);
+                    }
+
+                    req.user.save().then(() => {
+                        res.redirect(
+                            `/?success=${encodeURIComponent('Product was deleted successfully!')}`
+                        );
                     });
-                }).catch((err) => {
-                    console.log(err);
-                    res.redirect(
-                        `/?error=${encodeURIComponent('Product was not found!')}`
-                    );
                 });
-            } else {
-                res.redirect(
-                    `/?error=${encodeURIComponent('You must be author or Admin to delete this product')}`
-                );
-            }
+            });
         });
     },
 
     buyProductGet: (req, res) => {
-        let id = req.params.id;
-
-        PRODUCT.findById(id).then((product) => {
-            if (!product) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('Product was not found!')}`
-                );
-
-                return;
-            }
-
-            if (product.buyer) {
-                res.redirect(
-                    `/?error=${encodeURIComponent('This product has a buyer!')}`
-                );
-
-                return;
-            }
-
-            res.render('product/buy', {
-                product: product
-            });
-        }).catch((err) => {
-            console.log(err);
-            res.sendStatus(400);
+        res.render('product/buy', {
+            product: req.product
         });
     },
 
     buyProductPost: (req, res) => {
         let id = req.params.id;
 
-        PRODUCT.findById(id).then((product) => {
-            if (product.buyer) {
-                let error = `error=${encodeURIComponent('Product was already bought!')}`;
-                res.redirect(`/?${error}`);
-                return;
-            }
-
-            product.buyer = req.user._id;
-            product.save().then(() => {
-                req.user.boughtProducts.push(id);
-                req.user.save().then(() => {
-                    res.redirect('/');
-                });
+        req.product.buyer = req.user._id;
+        req.product.save().then(() => {
+            req.user.boughtProducts.push(id);
+            req.user.save().then(() => {
+                res.redirect('/');
             });
-        }).catch((err) => {
-            console.log(err);
-            res.sendStatus(400);
         });
     }
 };
