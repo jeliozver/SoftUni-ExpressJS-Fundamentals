@@ -22,11 +22,11 @@ const USER_SCHEMA = MONGOOSE.Schema({
     },
     firstName: {
         type: STRING,
-        replace: PROPERTY_IS_REQUIRED.replace('{0}', 'First name')
+        required: PROPERTY_IS_REQUIRED.replace('{0}', 'First name')
     },
     lastName: {
         type: STRING,
-        replace: PROPERTY_IS_REQUIRED.replace('{0}', 'Last name')
+        required: PROPERTY_IS_REQUIRED.replace('{0}', 'Last name')
     },
     age: {
         type: NUMBER,
