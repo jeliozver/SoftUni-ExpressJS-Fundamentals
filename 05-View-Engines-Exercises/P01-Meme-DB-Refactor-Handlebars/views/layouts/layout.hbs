@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MemeDB</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body>
+
+    <header>
+        <div class="inner">
+            {{> nav}}
+        </div>
+    </header>
+
+    {{#if success}}
+        <div id="succssesBox"><h2 id="succssesMsg">{{success}}</h2></div>
+    {{else if error}}
+        <div id="errBox"><h2 id="errMsg">{{error}}</h2></div>
+    {{/if}}
+
+    {{{body}}}
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Book Library
+    link(rel="stylesheet" type="text/css" href="/css/main.css")
+  body
+    header
+      .inner
+        nav
+          a.logo(href="/")
+            img.logo(src="/images/expressjs-card.png" alt="expressLogo")
+          input#nav(type="checkbox")
+          label(for="nav")
+          ul
+            li
+              a(href="/addBook") Add Book
+            li
+              a(href="/viewAllBooks") View All Books
+    block content

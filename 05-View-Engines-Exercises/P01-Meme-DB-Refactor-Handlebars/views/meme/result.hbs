@@ -1,0 +1,10 @@
+<h1>Here are your memes</h1>
+<div class="container">
+    {{#if memes}}
+        {{#each memes}}
+            {{> meme}}
+        {{/each}}
+    {{else}}
+        <h2>Sorry, no memes to show!</h2>
+    {{/if}}
+</div>

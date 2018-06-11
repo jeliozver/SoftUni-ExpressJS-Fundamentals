@@ -1,0 +1,8 @@
+extends ../layout.pug
+
+block content
+        .content
+            img(src=`${book.bookPoster}`, alt="")
+            h3=`${book.bookTitle}`
+            h3=`By ${book.bookAuthor}`
+            p=`Released ${book.bookYear}`

@@ -1,0 +1,15 @@
+<h1>Search Meme</h1>
+<div class="container">
+    <form action="/searchMeme" method="POST">
+        <label for="memeName">Title</label>
+        <input type="text" id="memeName" name="memeName" placeholder="The name of the meme">
+
+        <select name='genre' id="genreSelect">
+            <option value="all">All</option>
+            {{#each genres}} 
+                {{> genre}} 
+            {{/each}}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</div>
