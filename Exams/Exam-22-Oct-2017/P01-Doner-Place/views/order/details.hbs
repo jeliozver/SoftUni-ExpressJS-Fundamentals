@@ -1,0 +1,55 @@
+<h1>Order details</h1>
+<div class="catalog">
+    <div class="column">
+        <img src="{{order.product.image}}">
+    </div>
+    <div class="column">
+        <h2>{{order.product.category.name}} doner, {{order.product.size}}cm</h2>
+        <h3>From {{dateFormat order.date "MMMM Do YYYY, h:mm"}}</h3>
+        <div class="toppings">
+            {{#each order.toppings}}
+                <br>{{this}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="status">
+        <div class="status-block">
+            <span class="progress-right"></span>
+            {{#ifCond order.status 'Pending'}}
+                <span class="checkpoint current"></span>
+            {{else}}
+                <span class="checkpoint"></span>
+            {{/ifCond}}
+            <br> Pending
+        </div>
+        <div class="status-block">
+            <span class="progress-left"></span>
+            <span class="progress-right"></span>
+            {{#ifCond order.status 'In Progress'}}
+                <span class="checkpoint current"></span>
+            {{else}}
+                <span class="checkpoint"></span>
+            {{/ifCond}}
+            <br> In Progress
+        </div>
+        <div class="status-block">
+            <span class="progress-left"></span>
+            <span class="progress-right"></span>
+             {{#ifCond order.status 'In Transit'}}
+                <span class="checkpoint current"></span>
+            {{else}}
+                <span class="checkpoint"></span>
+            {{/ifCond}}
+            <br> In Transit
+        </div>
+        <div class="status-block">
+            <span class="progress-left"></span>
+            {{#ifCond order.status 'Delivered'}}
+                <span class="checkpoint current"></span>
+            {{else}}
+                <span class="checkpoint"></span>
+            {{/ifCond}}
+            <br> Delivered
+        </div>
+    </div>
+</div>

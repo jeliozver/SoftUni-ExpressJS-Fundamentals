@@ -1,0 +1,41 @@
+<h1>Manage orders</h1>
+<div class="orders">
+	<form method="post">
+		{{#each orders}}
+		<div class="order">
+			<span class="order-time">{{dateFormat date "MMMM Do YYYY, h:mm"}}</span>
+			<span class="order-name">{{product.category.name}} doner, {{product.size}} cm</span>
+			<span class="order-status">
+				<select name="{{_id}}">
+					{{#ifCond status 'Pending'}}
+						<option value="Pending" selected>Pending</option>
+						<option value="In Progress">In Progress</option>
+						<option value="In Transit">In Transit</option>
+						<option value="Delivered">Delivered</option>
+            		{{/ifCond}}
+					{{#ifCond status 'In Progress'}}
+						<option value="Pending">Pending</option>
+						<option value="In Progress" selected>In Progress</option>
+						<option value="In Transit">In Transit</option>
+						<option value="Delivered">Delivered</option>
+            		{{/ifCond}}
+					{{#ifCond status 'In Transit'}}
+						<option value="Pending">Pending</option>
+						<option value="In Progress">In Progress</option>
+						<option value="In Transit" selected>In Transit</option>
+						<option value="Delivered">Delivered</option>
+            		{{/ifCond}}
+					{{#ifCond status 'Delivered'}}
+						<option value="Pending">Pending</option>
+						<option value="In Progress">In Progress</option>
+						<option value="In Transit">In Transit</option>
+						<option value="Delivered" selected>Delivered</option>
+            		{{/ifCond}}
+				</select>
+			</span>
+			<a href="/order/details/{{_id}}" class="button order-button">Details</a>
+		</div>
+		{{/each}}
+		<input type="submit" value="Save Changes" class="button" style="border:0">
+	</form>
+</div>

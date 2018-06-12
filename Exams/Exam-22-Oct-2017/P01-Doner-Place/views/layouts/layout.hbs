@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Doner Place</title>
+    <link href="/css/site.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <span class="logo">Doner Place</span>
+            {{#if user}}
+            <span class="greeting">Welcome, {{user.username}}!
+                <form id="logout-form" action="/user/logout" method="POST">
+                        <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
+                </form>
+            </span>
+            {{/if}}
+            <ul class="menu">
+                <li>
+                    <a class="button" href="/">Home</a>
+                </li>
+                <li>
+                    <a class="button" href="/order/status">Order Status</a>
+                </li>
+                {{#if admin}}
+                <li>
+                    <a class="button" href="/order/all">All Orders</a>
+                </li>
+                {{/if}}
+                {{#unless user}}
+                <li>
+                    <a class="button" href="/user/login">Login</a>
+                </li>
+                <li>
+                    <a class="button" href="/user/register">Register</a>
+                </li>
+                {{/unless}}
+            </ul>
+        </header>
+        <main>
+        {{#if msg.success}}
+            <div id="successBox">
+                <h2>{{msg.success}}</h2>
+            </div>
+        {{else if msg.error}}
+            <div id="errorBox">
+                <h2>{{msg.error}}</h2>
+            </div>
+        {{else if success}}
+             <div id="successBox">
+                <h2>{{success}}</h2>
+            </div>
+         {{else if error}}
+            <div id="errorBox">
+                <h2>{{error}}</h2>
+            </div>
+        {{/if}} 
+    
+        {{{body}}}
+        </main>
+        <footer>Doner Place &copy; 2017</footer>
+    </div>
+
+    <script>
+        let errBox = document.getElementById('errorBox');
+        let succBox = document.getElementById('successBox');
+
+        setTimeout(function () {
+            if (errBox) {
+                errBox.style.display = 'none';
+            }
+
+            if (succBox) {
+                succBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+</body>
+
+</html>
