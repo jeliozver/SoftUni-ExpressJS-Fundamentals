@@ -15,40 +15,24 @@
     <div class="status">
         <div class="status-block">
             <span class="progress-right"></span>
-            {{#ifCond order.status 'Pending'}}
-                <span class="checkpoint current"></span>
-            {{else}}
-                <span class="checkpoint"></span>
-            {{/ifCond}}
+                <span class="checkpoint {{#eq order.status 'Pending'}}current{{/eq}}"></span>
             <br> Pending
         </div>
         <div class="status-block">
             <span class="progress-left"></span>
             <span class="progress-right"></span>
-            {{#ifCond order.status 'In Progress'}}
-                <span class="checkpoint current"></span>
-            {{else}}
-                <span class="checkpoint"></span>
-            {{/ifCond}}
+            <span class="checkpoint {{#eq order.status 'In Progress'}}current{{/eq}}"></span>
             <br> In Progress
         </div>
         <div class="status-block">
             <span class="progress-left"></span>
             <span class="progress-right"></span>
-             {{#ifCond order.status 'In Transit'}}
-                <span class="checkpoint current"></span>
-            {{else}}
-                <span class="checkpoint"></span>
-            {{/ifCond}}
+            <span class="checkpoint {{#eq order.status 'In Transit'}}current{{/eq}}"></span>
             <br> In Transit
         </div>
         <div class="status-block">
             <span class="progress-left"></span>
-            {{#ifCond order.status 'Delivered'}}
-                <span class="checkpoint current"></span>
-            {{else}}
-                <span class="checkpoint"></span>
-            {{/ifCond}}
+             <span class="checkpoint {{#eq order.status 'Delivered'}}current{{/eq}}"></span>
             <br> Delivered
         </div>
     </div>

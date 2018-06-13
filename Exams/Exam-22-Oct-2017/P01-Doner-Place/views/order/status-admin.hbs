@@ -7,30 +7,10 @@
 			<span class="order-name">{{product.category.name}} doner, {{product.size}} cm</span>
 			<span class="order-status">
 				<select name="{{_id}}">
-					{{#ifCond status 'Pending'}}
-						<option value="Pending" selected>Pending</option>
-						<option value="In Progress">In Progress</option>
-						<option value="In Transit">In Transit</option>
-						<option value="Delivered">Delivered</option>
-            		{{/ifCond}}
-					{{#ifCond status 'In Progress'}}
-						<option value="Pending">Pending</option>
-						<option value="In Progress" selected>In Progress</option>
-						<option value="In Transit">In Transit</option>
-						<option value="Delivered">Delivered</option>
-            		{{/ifCond}}
-					{{#ifCond status 'In Transit'}}
-						<option value="Pending">Pending</option>
-						<option value="In Progress">In Progress</option>
-						<option value="In Transit" selected>In Transit</option>
-						<option value="Delivered">Delivered</option>
-            		{{/ifCond}}
-					{{#ifCond status 'Delivered'}}
-						<option value="Pending">Pending</option>
-						<option value="In Progress">In Progress</option>
-						<option value="In Transit">In Transit</option>
-						<option value="Delivered" selected>Delivered</option>
-            		{{/ifCond}}
+						<option value="Pending" {{#eq status 'Pending'}}selected{{/eq}}>Pending</option>
+						<option value="In Progress" {{#eq status 'In Progress'}}selected{{/eq}}>In Progress</option>
+						<option value="In Transit" {{#eq status 'In Transit'}}selected{{/eq}}>In Transit</option>
+						<option value="Delivered" {{#eq status 'Delivered'}}selected{{/eq}}>Delivered</option>
 				</select>
 			</span>
 			<a href="/order/details/{{_id}}" class="button order-button">Details</a>

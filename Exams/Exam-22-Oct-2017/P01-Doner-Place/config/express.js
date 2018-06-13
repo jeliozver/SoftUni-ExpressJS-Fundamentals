@@ -4,18 +4,14 @@ const BODY_PARSER = require('body-parser');
 const COOKIE_PARSER = require('cookie-parser');
 const SESSION = require('express-session');
 const PASSPORT = require('passport');
-const EXPRESS_HANDLEBARS = require('express-handlebars');
 const HANDLEBARS = require('handlebars');
+const EXPRESS_HANDLEBARS = require('express-handlebars');
+const HELPERS = require('handlebars-helpers');
+const COMPARISON = HELPERS.comparison();
 const ROLE = require('mongoose').model('Role');
 
 HANDLEBARS.registerHelper('dateFormat', require('handlebars-dateformat'));
-HANDLEBARS.registerHelper('ifCond', function (v1, v2, options) {
-    if (v1.toString() === v2.toString()) {
-        return options.fn(this);
-    }
-
-    return options.inverse(this);
-});
+HANDLEBARS.registerHelper('eq', COMPARISON.eq);
 
 module.exports = (APP, CONFIG) => {
     APP.engine('.hbs', EXPRESS_HANDLEBARS({
