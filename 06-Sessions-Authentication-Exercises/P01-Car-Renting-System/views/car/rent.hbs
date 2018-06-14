@@ -1,0 +1,27 @@
+<div id="details">
+    <div class="car-details">
+        <h2>{{carModel}}</h2>
+        <img src="{{image}}" alt="car" />
+        <p>{{description}}</p>
+        <h2>Class: {{class.name}}</p>
+            <h2>Price Per Day: {{pricePerDay}} &euro;</h2>
+            <h2 id="price">{{pricePerDay}}</h2>
+            <h2 id="total">Total Price: 0</h2>
+    </div>
+    <form id="rent-form" action="/cars/rent/{{id}}" method="POST">
+        <label for="days">Rent days:</label>
+        <input type="number" name="days" id="days" step="1" value="1" />
+        <input class="submit-btn" type="submit" value="Rent" />
+    </form>
+
+    <script>
+        let days = document.getElementById('days');
+        let price = Number(document.getElementById('price').textContent);
+        let total = document.getElementById('total');
+
+        days.addEventListener('input', () => {
+            let count = Number(days.value);
+            total.textContent = `Total Price: ${count * price} €`;
+        });
+    </script>
+</div>

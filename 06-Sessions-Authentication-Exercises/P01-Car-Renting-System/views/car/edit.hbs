@@ -1,0 +1,19 @@
+<form class="car-form" method="POST">
+    <label for="carModel">Model:</label>
+    <input class="input-field" type="text" id="carModel" name="carModel" value="{{car.carModel}}" />
+    <label for="class">Class:</label>
+    <select class="input-field" name="class" id="class">
+        {{#each classes}} {{#ifCond _id ../car.class}}
+        <option value="{{id}}" selected>{{name}}</option>
+        {{else}}
+        <option value="{{id}}">{{name}}</option>
+        {{/ifCond}} {{/each}}
+    </select>
+    <label for="image">Image:</label>
+    <input class="input-field" type="url" name="image" id="image" value="{{car.image}}" />
+    <label for="description">Description:</label>
+    <textarea class="input-field text-area" name="description" id="description">{{car.description}}</textarea>
+    <label for="pricePerDay">Price per Day:</label>
+    <input class="input-field" type="number" name="pricePerDay" id="pricePerDay" value="{{car.pricePerDay}}" />
+    <input class="submit-btn" type="submit" value="Edit Car" />
+</form>

@@ -1,0 +1,260 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #BA925E;
+}
+
+ul {
+    list-style-type: none;
+    padding: 18px 0;
+}
+
+ul li {
+    display: inline-block;
+    margin: 0 30px 0 auto;
+    line-height: 60px;
+}
+
+ul li a, span {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 900;
+    font-size: 17px;
+}
+
+ul li a:hover {
+    color: royalblue;
+}
+
+.first {
+    margin-left: 30px;
+}
+
+.align-right {
+    float: right;
+}
+
+#home {
+    background: url('../images/background.jpg') no-repeat;
+    background-size: cover;
+    height: 80%;
+}
+
+#home h1 {
+    padding-top: 20px;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+#login-form, #register-form, .car-form {
+    text-align: center;
+    background-color: peachpuff;
+    padding: 20px 0;
+}
+
+#search-form {
+    margin: 20px 20px;
+}
+
+#search-form input {
+    margin: 10px 0;
+}
+
+#search-form select {
+    width: 15%;
+    height: 30px;
+    margin: 5px 0;
+}
+
+label {
+    font-size: 18px;
+    padding: 3px 0;
+    font-weight: bold;
+}
+
+label, input {
+    display: block;
+    margin: auto;
+}
+
+#details {
+    margin: auto;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 50%;
+    padding: 5px 0;
+}
+
+#details img {
+    width: 100%;
+    height: auto;
+}
+
+#details p {
+    margin: 10px 0;
+}
+
+#price {
+    display: none;
+}
+
+.input-field {
+    width: 20%;
+    height: 35px;
+    padding-left: 10px;
+    outline: none;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.text-area {
+    height: 20%;
+}
+
+.submit-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: crimson;
+    border: 1px solid crimson;
+    border-radius: 15px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background-color: green;
+    border-color: green;
+    cursor: pointer;
+}
+
+.car {
+    padding: 20px 0;
+    display: inline-block;
+    width: 20%;
+    vertical-align: top;
+    border: 3px solid black;
+    border-radius: 15px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.car h2 {
+    padding-bottom: 30px;
+}
+
+.price {
+    padding-top: 10px;
+}
+
+.car:hover {
+    border: 3px solid green;
+}
+
+.car img {
+    width: 100%;
+    height: 200px;
+}
+
+.buttons {
+    margin: auto;
+}
+
+.rent-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: crimson;
+    border: 1px solid crimson;
+    border-radius: 15px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.edit-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 15px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+table {
+    color: #333333;
+    border-spacing: unset;
+}
+
+thead th {
+    color: #ffffff;
+    background-color: #90b4d6;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 5px 30px 5px 10px;
+    font-size: 18px;
+    margin: 0;
+    text-align: center;
+    font-weight: normal;
+}
+
+td {
+    padding: 5px 30px 5px 10px;
+    font-size: 18px;
+    margin: 0;
+    text-align: center;
+    background-color: #84b3ad;
+    width: 150px;
+}
+
+tr:nth-child(even) td, tr:nth-child(even) th {
+    background-color: #689ad8;
+}
+
+#successBox, #errorBox {
+    text-align: center;
+    padding: 10px 0;
+    color: #fff;
+}
+
+#successBox {
+    background-color: green;
+}
+
+#errorBox {
+    background-color: red;
+}
+
+footer p {
+    color: #fff;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 15px;
+}
