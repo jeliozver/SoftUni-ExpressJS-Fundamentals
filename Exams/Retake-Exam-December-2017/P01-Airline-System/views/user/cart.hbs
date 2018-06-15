@@ -1,0 +1,27 @@
+{{#each cart}}
+    <section class="single-ticket">
+    <div class="left-ticket-container">
+        <img src="{{flight.image}}" alt="" class="destination-img">
+        <div class="flight-parameters">
+            <span class="ticket-price">Price: {{pricePerSeat}}$</span>
+            <span class="ticket-class">Class: {{type}}</span>
+        </div>
+    </div>
+    <div class="right-ticket-container">
+        <h2>{{flight.destination}}</h2>
+        <p>from {{flight.origin}}</p>
+        <p>{{dateFormat flight.date "DD MMMM"}}</p>
+        <p>{{flight.time}}</p>
+        <div>
+            <span class="number-of-tickets">{{bookedSeats}}</span>
+            <a href="/user/ticket/remove/{{_id}}" class="remove">REMOVE</a>
+        </div>
+    </div>
+</section>
+<section class="ticket-checkout">
+    <div class="total">Sub total: {{total}}$</div>
+    <a href="/user/ticket/buy/{{_id}}" class="checkout">Checkout</a>
+</section>
+{{else}}
+<h2>No Tickets in Cart!</h2>
+{{/each}}

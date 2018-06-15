@@ -1,0 +1,16 @@
+<h2>Edit flight</h2>
+<form action="/flight/edit/{{_id}}" method="POST">
+    <label>Destination:</label>
+    <input type="text" name="destination" placeholder="Destination" value="{{destination}}" />
+    <label>Origin:</label>
+    <input type="text" name="origin" placeholder="Origin" value="{{origin}}" />
+    <label>Date:</label>
+    <input type="date" name="date" value="{{dateFormat date "YYYY-MM-DD"}}" />
+    <label>Time:</label>
+    <input type="time" name="time" value="{{time}}" />
+    <label>Image:</label>
+    <input type="text" name="image" value="{{image}}" />
+    <label>Public:</label>
+    <input type="checkbox" name="public" {{#if public}}checked{{/if}} />
+    <input type="submit" class="save-changes" value="Save Changes">
+</form>

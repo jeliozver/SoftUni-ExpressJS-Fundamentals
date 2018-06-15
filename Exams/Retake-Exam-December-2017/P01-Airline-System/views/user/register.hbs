@@ -1,0 +1,12 @@
+<h2>Create your account:</h2>
+<form id="register-form" action="/user/register" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value="{{username}}" />
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{email}}" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" />
+    <label for="confirmedPassword">Repeat Password:</label>
+    <input type="password" id="confirmedPassword" name="confirmedPassword" />
+    <input class="register" type="submit" value="Register" />
+</form>

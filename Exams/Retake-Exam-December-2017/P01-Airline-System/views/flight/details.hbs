@@ -1,0 +1,45 @@
+<section class="ticket-area">
+    <div class="ticket-area-left">
+        <img src="{{image}}" alt="">
+    </div>
+    <div class="ticket-area-right">
+        <h3>{{destination}}</h3>
+        <div>from {{origin}}</div>
+        <div class="data-and-time">{{dateFormat date "DD MMMM"}} {{time}}
+            {{#if ./admin}}
+            <a href="/flight/edit/{{_id}}" class="edit-flight-detail"></a>
+            <form action="/flight/publish/{{_id}}" method="POST">
+                <input type="submit" class="create-seat" value="Publish Flight">
+            </form>
+            {{/if}}
+        </div>
+    </div>
+</section>
+{{#if ./admin}}
+<section class="seat-info">
+    <form action="/seat/add" class="seat-form" method="POST">
+        <input type="hidden" name="flight" value="{{_id}}" />
+        <input type="number" placeholder="Price" name="price" />
+        <input type="text" placeholder="Type" name="type" />
+        <input type="number" name="freeSeats" step="1" min="1" max="999" placeholder="Tickets Counter">
+        <input type="submit" class="create-seat" value="Create Seat">
+    </form>
+</section>
+{{/if}}
+{{#each seats}}
+<section class="flight-details">
+    <form action="/user/cart" class="seat-form" method="POST">
+        <span>{{price}}$</span>
+        <span>{{type}}</span>
+        <span>Free seats: {{freeSeats}}</span>
+        <input type="hidden" name="seat" value="{{_id}}" />
+        <input type="number" name="seats" step="1" min="1" max={{freeSeats}} placeholder="Add Number">
+        <input type="submit" class="create-seat" value="Add to Cart">
+        {{#if ../admin}}
+            <a href="/seat/delete/{{_id}}" class="delete">X</a>
+        {{/if}}
+    </form>
+</section>
+{{else}}
+<h2>No Seats!</h2>
+{{/each}}

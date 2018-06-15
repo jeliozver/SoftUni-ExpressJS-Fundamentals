@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Airline Systems</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="left-container">
+            <ul>
+                <li>
+                    <a href="/">Flights</a>
+                </li>
+                {{#if user}}
+                <li>
+                    <a href="/user/profile">My Tickets</a>
+                </li>
+                {{/if}} 
+                {{#unless user}}
+                <li>
+                    <a href="/user/login">Login</a>
+                </li>
+                <li>
+                    <a href="/user/register">Register</a>
+                </li>
+                {{/unless}}
+            </ul>
+        </div>
+        {{#if user}}
+        <div class="right-container">
+            <form id="logout-form" action="/user/logout" method="POST">
+                <span>Welcome, {{user.username}}</span>
+                <a class="log-out" href="javascript:document.getElementById('logout-form').submit()">Logout</a>
+                <a href="/user/cart">
+                    <img src="/img/cart.png" alt="" class="cart">
+                </a>
+            </form>
+        </div>
+        {{/if}}
+    </nav>
+    <main>
+        {{#if msg.success}}
+        <div id="successBox">
+            <h2>{{msg.success}}</h2>
+        </div>
+        {{else if msg.error}}
+        <div id="errorBox">
+            <h2>{{msg.error}}</h2>
+        </div>
+        {{else if success}}
+        <div id="successBox">
+            <h2>{{success}}</h2>
+        </div>
+        {{else if error}}
+        <div id="errorBox">
+            <h2>{{error}}</h2>
+        </div>
+        {{/if}} 
+
+        {{{body}}}
+        
+        <footer>SoftUni Airlines</footer>
+    </main>
+    <script>
+        let errBox = document.getElementById('errorBox');
+        let succBox = document.getElementById('successBox');
+
+        setTimeout(function () {
+            if (succBox) {
+                succBox.style.display = 'none';
+            }
+        }, 3000);
+
+        if (errBox) {
+            errBox.addEventListener('click', function () {
+                errBox.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+<h2>Add new flight</h2>
+<form action="/flight/add" method="POST">
+    <label>Destination:</label>
+    <input type="text" name="destination" placeholder="Destination" value="{{destination}}" />
+    <label>Origin:</label>
+    <input type="text" name="origin" placeholder="Origin" value="{{origin}}" />
+    <label>Date:</label>
+    <input type="date" name="date" value="{{date}}" />
+    <label>Time:</label>
+    <input type="time" name="time" value="{{time}}" />
+    <label>Image:</label>
+    <input type="text" name="image" value="{{image}}" />
+    <input type="submit" class="create" value="Create">
+</form>
