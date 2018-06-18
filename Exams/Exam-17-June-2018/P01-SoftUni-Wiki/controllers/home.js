@@ -31,20 +31,13 @@ function getArticles() {
             .then((articles) => {
                 if (articles.length >= 1) {
                     let latest = articles.shift();
-                    let words = latest.edits[0].content.split(/(\w+)/).filter(e => e !== ' ');
-                    let result = '';
-                    let counter = 0;
-
-                    for (let i = 0; i < words.length; i++) {
-                        if (counter > 50) {
-                            break;
-                        }
-
-                        counter++;
-                        result += `${words[i]} `;
-                    }
-
-                    latest.edits[0].content = result;
+                    let words = latest.edits[0].content
+                        .split(/(\w+)/g)
+                        .filter(e => e !== ' ')
+                        .slice(0, 50)
+                        .join(' ');
+                        
+                    latest.edits[0].content = words;
                     resolve(latest, articles);
                 } else {
                     resolve();
