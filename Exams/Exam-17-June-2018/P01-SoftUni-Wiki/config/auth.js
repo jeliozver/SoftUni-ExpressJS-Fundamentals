@@ -35,6 +35,7 @@ module.exports = {
 
     isLocked: (req, res, next) => {
         let id = req.params.id;
+
         ARTICLE.findById(id).then((article) => {
             if (!article.locked) {
                 next();
@@ -42,7 +43,8 @@ module.exports = {
                 if (req.user.isAdmin) {
                     next();
                 } else {
-                    res.redirect('/user/login');
+                    req.session.msg = { error: 'This article is locked for editing!' };
+                    res.redirect('/');
                 }
             }
         });

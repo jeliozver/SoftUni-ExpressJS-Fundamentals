@@ -30,6 +30,7 @@ module.exports = {
 
     editGet: (req, res) => {
         let id = req.params.id;
+
         ARTICLE.findById(id)
             .populate({ path: 'edits', options: { sort: { 'creationDate': -1 } } })
             .then((article) => {
@@ -39,6 +40,7 @@ module.exports = {
 
     editPost: (req, res) => {
         let id = req.params.id;
+
         ARTICLE.findById(id).then((article) => {
             EDIT.create({
                 author: req.user.id,
@@ -50,7 +52,13 @@ module.exports = {
                     req.session.msg = { success: 'Article edited successfully!' };
                     res.redirect('/');
                 });
+            }).catch(() => {
+                req.session.msg = { error: 'Article was not edited!' };
+                res.redirect('/');
             });
+        }).catch(() => {
+            req.session.msg = { error: 'Article was not edited!' };
+            res.redirect('/');
         });
     },
 
@@ -77,9 +85,12 @@ module.exports = {
     },
 
     getAll: (req, res) => {
-        ARTICLE.find({}).sort({ title: 1 }).then((articles) => {
-            res.render('article/all-articles', { articles });
-        });
+        ARTICLE.find({})
+            .collation({ locale: 'en', strength: 2 })
+            .sort({ title: 1 })
+            .then((articles) => {
+                res.render('article/all-articles', { articles });
+            });
     },
 
     getLatest: (req, res) => {
@@ -87,6 +98,12 @@ module.exports = {
             .sort({ creationDate: -1 })
             .limit(1)
             .populate({ path: 'edits', options: { sort: { 'creationDate': -1 } } }).then((found) => {
+                if (found.length === 0 || !found) {
+                    req.session.msg = { error: 'Article was not found!' };
+                    res.redirect('/');
+                    return;
+                }
+
                 let article = found[0];
                 let latestEdit = article.edits[0].content.split('\r\n\r\n');
                 article['content'] = latestEdit;
@@ -96,9 +113,16 @@ module.exports = {
 
     getSingle: (req, res) => {
         let id = req.params.id;
+
         ARTICLE.findById(id)
             .populate({ path: 'edits', options: { sort: { 'creationDate': -1 } } })
             .then((article) => {
+                if (article.length === 0 || !article) {
+                    req.session.msg = { error: 'Article was not found!' };
+                    res.redirect('/');
+                    return;
+                }
+
                 let latestEdit = article.edits[0].content.split('\r\n\r\n');
                 article['content'] = latestEdit;
                 res.render('article/details', { article });
@@ -110,7 +134,14 @@ module.exports = {
 
     getSingleEdit: (req, res) => {
         let id = req.params.id;
+
         EDIT.findById(id).populate('article').then((edit) => {
+            if (edit.length === 0 || !edit) {
+                req.session.msg = { error: 'Edit for this article was not found!' };
+                res.redirect('/');
+                return;
+            }
+
             let contentSplited = edit.content.split('\r\n\r\n');
             edit['contentSplited'] = contentSplited;
             res.render('article/details-edit', { edit });
