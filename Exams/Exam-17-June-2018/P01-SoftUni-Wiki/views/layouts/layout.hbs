@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Wiki</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+
+<body>
+    <div>
+        <aside>
+            <div class="center">
+                <img class="logo" src="/img/logo.png" alt="logo">
+            </div>
+
+            <nav>
+                <a href="/">Main Page</a>
+                <a href="/article/latest">Latest Article</a>
+                <a href="/article/all">All Articles</a>
+                <form action="/article/search" method="POST">
+                    <input type="text" name="title" />
+                    <input type="submit" value="Search">
+                </form>
+                {{#if user}}
+                <a href="/article/add">Create New Article</a>
+                {{/if}}
+            </nav>
+        </aside>
+        <div id="container">
+            <header>
+                {{#unless user}}
+                <a href="/user/login">Login</a>
+                <a href="/user/register">Register</a>
+                {{/unless}} {{#if user}}
+                <form id="logout-form" action="/user/logout" method="POST">
+                    <span>Welcome, {{user.email}}!</span>
+                    <a class="log-out" href="javascript:document.getElementById('logout-form').submit()">[Logout]</a>
+                </form>
+                {{/if}}
+            </header>
+            <main>
+                <div>
+                    {{#if msg.success}}
+                    <div id="successBox">
+                        <h2>{{msg.success}}</h2>
+                    </div>
+                    {{else if msg.error}}
+                    <div id="errorBox">
+                        <h2>{{msg.error}}</h2>
+                    </div>
+                    {{else if success}}
+                    <div id="successBox">
+                        <h2>{{success}}</h2>
+                    </div>
+                    {{else if error}}
+                    <div id="errorBox">
+                        <h2>{{error}}</h2>
+                    </div>
+                    {{/if}}
+                </div>
+                <h1>Welcome to SoftUni Wiki!</h1>
+                {{{body}}}
+            </main>
+            <footer>
+                SoftUni Wiki &copy; 2018
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let errBox = document.getElementById('errorBox');
+        let succBox = document.getElementById('successBox');
+
+        setTimeout(function () {
+            if (errBox) {
+                errBox.style.display = 'none';
+            }
+
+            if (succBox) {
+                succBox.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+</body>
+
+</html>

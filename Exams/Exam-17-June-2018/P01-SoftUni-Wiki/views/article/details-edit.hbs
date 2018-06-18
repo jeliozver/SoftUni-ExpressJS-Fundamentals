@@ -1,0 +1,12 @@
+<div class="spacer">
+    <h2>{{edit.article.title}}
+        <div class="controls">
+            <a href="/article/history/{{edit.article._id}}">[history]</a>
+        </div>
+    </h2>
+    <article>
+       {{#each edit.contentSplited}}
+            <p>{{this}}</p>
+       {{/each}}
+    </article>
+</div>
