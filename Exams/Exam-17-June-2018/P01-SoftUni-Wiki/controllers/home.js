@@ -3,7 +3,7 @@ const ARTICLE = require('mongoose').model('Article');
 module.exports = {
     index: (req, res) => {
         if (req.session.msg) {
-            getArticles().then((latest, articles) => {
+            getArticles().then(({latest, articles}) => {
                 let msg = req.session.msg;
                 req.session.msg = undefined;
                 res.render('home/index', { msg, latest, articles });
@@ -12,7 +12,7 @@ module.exports = {
                 res.redirect('/');
             });
         } else {
-            getArticles().then((latest, articles) => {
+            getArticles().then(({latest, articles}) => {
                 res.render('home/index', { latest, articles });
             }).catch(() => {
                 req.session.msg = { error: 'Error: 400 - Bad Request!' };
@@ -38,9 +38,9 @@ function getArticles() {
                         .join(' ');
                         
                     latest.edits[0].content = words;
-                    resolve(latest, articles);
+                    resolve({latest, articles});
                 } else {
-                    resolve();
+                    resolve({});
                 }
             }).catch(() => {
                 reject();
